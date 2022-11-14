@@ -1,7 +1,10 @@
 package mk.ukim.finki.wp.lab.model;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class Course {
     private Long courseId;
 

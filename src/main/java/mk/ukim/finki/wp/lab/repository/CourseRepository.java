@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.lab.repository;
 
+import lombok.Data;
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import org.springframework.stereotype.Repository;
@@ -35,12 +36,25 @@ public class CourseRepository {
         return listaK;
     }
     public Course findById(Long courseId){
-        return (listaK.getCourseId())
+        for(int i=0;i<5;i++){
+            if(listaK.get(i).getCourseId().equals(courseId)){
+                return listaK.get(i);
+            }
+        }
+        return null;
     }
     public List<Student> findAllStudentsByCourse(Long courseId){
+        for(int i=0;i<5;i++){
+            if(listaK.get(i).getCourseId().equals(courseId)){
+                return listaK.get(i).getStudents();
+            }
+        }
+        return null;
         // кој ќе врати листа од студенти кои слушаат одреден курс.
     }
     public Course addStudentToCourse(Student student, Course course){
         //кој ќе направи додавање на нов студент во листата од студенти.
+         course.getStudents().add(student);
+         return course;
     }
 }

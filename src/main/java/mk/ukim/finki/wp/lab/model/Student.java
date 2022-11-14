@@ -1,8 +1,10 @@
 package mk.ukim.finki.wp.lab.model;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 
-@Entity
+@Data
 public class Student {
     private String username;
 
