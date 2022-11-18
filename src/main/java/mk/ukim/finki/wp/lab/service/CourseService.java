@@ -15,4 +15,10 @@ public interface CourseService{
     Course addStudentInCourse(String username, Long courseId);
     List<Course> getCourses();
     Course getCourseById(Long courseId);
+
+    Course addCourse(String name, String description, Long teacherID);
+
+    void editCourse(Long course, String name, String description, Long teacher);
+
+    void deleteCourse(Long id);
 }

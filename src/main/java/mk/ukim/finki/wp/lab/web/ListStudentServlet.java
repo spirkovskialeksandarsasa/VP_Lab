@@ -4,6 +4,7 @@ import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.StudentService;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -42,11 +43,18 @@ public class ListStudentServlet extends HttpServlet {
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         String parameter = req.getParameter("course");
         req.getSession().setAttribute("course", parameter);
-        Course course = courseService.getCourseById(Long.parseLong(parameter));
-        List <Student> students = new ArrayList<>(studentService.listAll());
-        students.removeAll(courseService.listStudentsByCourse(course.getCourseId()));
-        webContext.setVariable("students", students);
-        webContext.setVariable("course", course.getCourseId());
-        springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
+        if (parameter == null) {
+            resp.sendRedirect("/courses");
+            return;
+        }
+            Course course = courseService.getCourseById(Long.parseLong(parameter));
+            List<Student> students = new ArrayList<>(studentService.listAll());
+            if(course== null){
+                resp.sendRedirect("/courses");
+                return;
+            }
+                webContext.setVariable("students", students);
+                webContext.setVariable("course", course.getCourseId());
+                this.springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
     }
 }

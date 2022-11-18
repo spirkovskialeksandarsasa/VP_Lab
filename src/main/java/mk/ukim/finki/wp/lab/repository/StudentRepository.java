@@ -8,7 +8,7 @@ import java.util.*;
 
 @Repository
 public class StudentRepository {
-    List<Student> listaS = new ArrayList<Student>(5);
+    public List<Student> listaS = new ArrayList<Student>(5);
 
     {
         Student student1 = new Student("studenteden", "lozinka1", "Aleksandar Sasa", "Spirkovski");

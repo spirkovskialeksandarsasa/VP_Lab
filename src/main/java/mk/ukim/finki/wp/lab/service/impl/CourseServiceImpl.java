@@ -5,9 +5,8 @@ import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.repository.CourseRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.StudentService;
+import mk.ukim.finki.wp.lab.service.TeacherService;
 import org.springframework.stereotype.Service;
-import mk.ukim.finki.wp.lab.model.Course;
-import mk.ukim.finki.wp.lab.model.Student;
 
 import java.util.List;
 
@@ -15,10 +14,12 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
    private final CourseRepository courseRepository;
    private final StudentService studentService;
+   private final TeacherService teacherService;
 
-    public CourseServiceImpl(CourseRepository courseRepository, StudentService studentService) {
+    public CourseServiceImpl(CourseRepository courseRepository, StudentService studentService, TeacherService teacherService) {
         this.courseRepository = courseRepository;
         this.studentService = studentService;
+        this.teacherService = teacherService;
     }
 
     @Override
@@ -44,5 +45,24 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourseById(Long courseId) {
         return courseRepository.findById(courseId);
+    }
+
+    @Override
+    public Course addCourse(String name, String description, Long teacherID) {
+        Course course = new Course(name, description, teacherService.findById(teacherID));
+        return courseRepository.addCourse(course);
+    }
+
+    @Override
+    public void editCourse(Long id, String name, String description, Long teacher) {
+        Course course = courseRepository.findById(id);
+        course.setName(name);
+        course.setDescription(description);
+        course.setTeacher(teacherService.findById(teacher));
+    }
+
+    @Override
+    public void deleteCourse(Long id) {
+        courseRepository.deleteCourse(id);
     }
 }
