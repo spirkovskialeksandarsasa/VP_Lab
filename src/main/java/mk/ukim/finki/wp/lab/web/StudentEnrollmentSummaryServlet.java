@@ -20,19 +20,16 @@ public class StudentEnrollmentSummaryServlet extends HttpServlet {
     private final SpringTemplateEngine springTemplateEngine;
     private final CourseService courseService;
 
-    private final StudentService studentService;
-
-    public StudentEnrollmentSummaryServlet(SpringTemplateEngine springTemplateEngine, CourseService courseService, StudentService studentService) {
+    public StudentEnrollmentSummaryServlet(SpringTemplateEngine springTemplateEngine, CourseService courseService) {
         this.springTemplateEngine = springTemplateEngine;
         this.courseService = courseService;
-        this.studentService = studentService;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         String parameter = req.getParameter("student");
-        Long courseID = Long.valueOf(req.getSession().getAttribute("course").toString());
+        Long courseID = Long.parseLong(req.getSession().getAttribute("course").toString());
         Course course = courseService.getCourseById(courseID);
         webContext.setVariable("course", course.getName());
         courseService.addStudentInCourse(parameter, courseID);

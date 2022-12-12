@@ -1,5 +1,7 @@
 package mk.ukim.finki.wp.lab.web.controller;
 
+import com.sun.istack.NotNull;
+import lombok.Getter;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.TeacherService;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,6 @@ public class CourseController {
         this.teacherService = teacherService;
         this.courseService = courseService;
     }
-
-
     @GetMapping
     public String getCoursesPage(@RequestParam(required = false) String error, Model model) {
         if (error != null && !error.isEmpty()) {
@@ -28,8 +28,13 @@ public class CourseController {
 
         return "/listCourses";
     }
+    @GetMapping("/add")
+    public String getAddCoursePage(@NotNull Model model) {
+        model.addAttribute("teachers", teacherService.findAll());
+        return "add-course";
+    }
 
-    @PostMapping("/courses/add")
+    @PostMapping("/add")
     public String saveCourse(@RequestParam String name, @RequestParam String description, @RequestParam Long teacher, @RequestParam(required = false) Long course) {
         if (course == null) {
             courseService.addCourse(name, description, teacher);
@@ -39,9 +44,21 @@ public class CourseController {
         return "redirect:/courses";
     }
 
-@DeleteMapping("/courses/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteCourse(@PathVariable Long id) {
         this.courseService.deleteCourse(id);
         return "redirect:/courses";
     }
+    @GetMapping("/edit/{id}")
+    public String getEditCoursePage(@PathVariable Long id, Model model){
+        if (courseService.getCourseById(id) == null) {
+            return "redirect:/courses?error=Course Not Found";
+        }
+
+        model.addAttribute("course", courseService.getCourseById(id));
+        model.addAttribute("teachers", teacherService.findAll());
+        return "add-course";
+    }
+
 }
+

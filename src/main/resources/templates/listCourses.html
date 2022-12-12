@@ -16,9 +16,21 @@
 <main>
     <h2>Choose course:</h2>
     <form th:method="POST" th:action="@{/addStudent}">
-        <input th:each="course : ${courses}" type="radio" name="course" th:value="${course.getCourseId()}" th:text="${course.getName() + ' ' + course.getCourseId()}">
+        <input th:each="course : ${courses}" type="radio" name="course" th:value="${course.getCourseId()}" th:text="${course.getName()}">
         <button type="submit" value="submit">Submit</button>
     </form>
+<h1>Azuriraj gi kursevite</h1>
+    <div th:each="course :${courses}">
+        <p th:text="${course.getName()}"></p>
+        <form class="delete" th:method="DELETE" th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}">
+            <button type="submit">Delete</button>
+        </form>
+        <a th:href="@{'/courses/edit/{id}' (id=${course.getCourseId()})}">Edit</a>
+    </div>
+
+    <div>
+        <a th:href="@{'courses/add'}">Add a course</a>
+    </div>
     <br/>
 </main>
 </body>

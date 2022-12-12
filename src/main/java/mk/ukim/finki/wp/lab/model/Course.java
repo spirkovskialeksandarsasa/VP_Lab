@@ -2,11 +2,12 @@ package mk.ukim.finki.wp.lab.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Data
-public class Course {
+public class Course implements Comparable<Course>{
     private Teacher teacher;
     private Long courseId;
 
@@ -21,7 +22,12 @@ public class Course {
         this.courseId = new Random().nextLong();
         this.name = name;
         this.description = description;
-        this.students = students;
+        this.students = new ArrayList<>();
         this.teacher = teacher;
+    }
+
+    @Override
+    public int compareTo(Course o) {
+        return name.compareTo(o.name);
     }
 }

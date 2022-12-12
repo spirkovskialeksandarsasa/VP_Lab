@@ -24,17 +24,23 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Student> listStudentsByCourse(Long courseId) {
-        return courseRepository.findAllStudentsByCourse(courseId);
+        return courseRepository.findById(courseId).getStudents();
     }
 
     @Override
     public Course addStudentInCourse(String username, Long courseId) {
-        Student student = (Student) studentService.listAll();
-        Course course = courseRepository.findById(courseId);
-            if (student.getUsername().equals(username)) {
-                courseRepository.addStudentToCourse(student, course);
-            }
-      return course;
+        Student student = studentService.listAll()
+                .stream().filter(s->s.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+
+        if(student==null){return null;}
+
+        else{
+            Course course = courseRepository.findById(courseId);
+            courseRepository.addStudentToCourse(student,course);
+            return course;
+        }
     }
 
     @Override
@@ -50,6 +56,13 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course addCourse(String name, String description, Long teacherID) {
         Course course = new Course(name, description, teacherService.findById(teacherID));
+        if (getCourses()
+                .stream()
+                .filter(c -> c.getName().equals(course.getName()))
+                .findFirst()
+                .orElse(null) != null) {
+            return null;
+        }
         return courseRepository.addCourse(course);
     }
 
@@ -62,7 +75,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(Long id) {
-        courseRepository.deleteCourse(id);
+    public boolean deleteCourse(Long id) {
+       return courseRepository.deleteCourse(id);
     }
 }
