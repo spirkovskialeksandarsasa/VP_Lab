@@ -1,9 +1,9 @@
 package mk.ukim.finki.wp.lab.web.controller;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.TeacherService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

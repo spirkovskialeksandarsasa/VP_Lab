@@ -2,7 +2,7 @@ package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
-import mk.ukim.finki.wp.lab.repository.CourseRepository;
+import mk.ukim.finki.wp.lab.repository.impl.CourseRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.StudentService;
 import mk.ukim.finki.wp.lab.service.TeacherService;
@@ -55,7 +55,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course addCourse(String name, String description, Long teacherID) {
-        Course course = new Course(name, description, teacherService.findById(teacherID));
+        Course course = new Course();
         if (getCourses()
                 .stream()
                 .filter(c -> c.getName().equals(course.getName()))
