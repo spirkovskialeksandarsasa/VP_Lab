@@ -1,11 +1,9 @@
 package mk.ukim.finki.wp.lab.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,6 +11,8 @@ import java.time.LocalDateTime;
 public class Grade {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     private Character grade;

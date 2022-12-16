@@ -30,6 +30,7 @@ public class Course implements Comparable<Course>{
     public Course() {
     }
 
+
     @Override
     public int compareTo(Course o) {
         return name.compareTo(o.name);

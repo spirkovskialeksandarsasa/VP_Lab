@@ -16,5 +16,5 @@ public interface CourseService{
 
     void editCourse(Long course, String name, String description, Long teacher);
 
-    boolean deleteCourse(Long id);
+    void deleteCourse(Long id);
 }

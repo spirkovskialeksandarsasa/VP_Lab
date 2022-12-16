@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
-@EntityScan
+@EntityScan(basePackages = "mk.ukim.finki.wp.lab.model")
 public class Lab1vpApplication {
 
     public static void main(String[] args) {
