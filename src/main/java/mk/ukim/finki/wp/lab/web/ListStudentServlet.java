@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "listStudent",urlPatterns = "/addStudent")
+@WebServlet(name = "listStudents", urlPatterns = "/addStudent")
 public class ListStudentServlet extends HttpServlet {
     private final SpringTemplateEngine springTemplateEngine;
     private final CourseService courseService;
@@ -28,33 +28,36 @@ public class ListStudentServlet extends HttpServlet {
         this.courseService = courseService;
         this.studentService = studentService;
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         String parameter = req.getSession().getAttribute("course").toString();
         Course course = courseService.getCourseById(Long.parseLong(parameter));
         List<Student> students = new ArrayList<>(studentService.listAll());
         students.removeAll(course.getStudents());
         webContext.setVariable("students", students);
-        springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
+        this.springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         String parameter = req.getParameter("course");
         req.getSession().setAttribute("course", parameter);
+
         if (parameter == null) {
             resp.sendRedirect("/courses");
             return;
         }
-            Course course = courseService.getCourseById(Long.parseLong(parameter));
-            List<Student> students = new ArrayList<>(studentService.listAll());
-            if(course== null){
-                resp.sendRedirect("/courses");
-                return;
-            }
-                webContext.setVariable("students", students);
-                webContext.setVariable("course", course.getCourseId());
-                this.springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
+
+        Course course = courseService.getCourseById(Long.parseLong(parameter));
+        List<Student> students = new ArrayList<>(studentService.listAll());
+        students.removeAll(courseService.listStudentsByCourse(course.getCourseId()));
+        webContext.setVariable("students", students);
+        webContext.setVariable("course", course.getCourseId());
+        this.springTemplateEngine.process("listStudents.html", webContext, resp.getWriter());
     }
 }

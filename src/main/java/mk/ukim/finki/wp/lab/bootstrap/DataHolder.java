@@ -18,9 +18,9 @@ public class DataHolder {
 
 @PostConstruct
     public void init(){
-      listaS = new ArrayList<Student>(10);
-      listaT = new ArrayList<Teacher>(10);
-      listaK = new ArrayList<Course>(10);
+      listaS = new ArrayList<Student>();
+      listaT = new ArrayList<Teacher>();
+      listaK = new ArrayList<Course>();
 //    Student student1 = new Student("studenteden", "lozinka1", "Aleksandar Sasa", "Spirkovski");
 //    Student student2 = new Student("studentdva", "lozinka2", "Boban", "Grncarov");
 //    Student student3 = new Student("studenttri", "lozinka3", "Lionel", "Pessi");

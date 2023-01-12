@@ -28,7 +28,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student save(String username, String password, String name, String surname){
-        Student student = new Student();
+        Student student = new Student(username, password, name, surname);
         studentRepository.save(student);
         return null;
     }
@@ -37,4 +37,5 @@ public class StudentServiceImpl implements StudentService{
     public Student getByUsername(String username) {
         return studentRepository.findByUsername(username);
     }
+
 }

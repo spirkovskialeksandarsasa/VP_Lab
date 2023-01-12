@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface JpaGradeRepository extends JpaRepository<Grade, Long> {
 
-    List<Grade> findAllByCourseCourseID(Long CourseID);
+    List<Grade> findAllByCourseCourseId(Long courseId);
 
-    Grade findByCourseCourseIdAndStudentUsername(Long courseID, String username);
+    Grade findByCourseCourseIdAndStudentUsername(Long courseId, String username);
 
     List<Grade> findAllByTimestampBetween(LocalDateTime start, LocalDateTime end);
 

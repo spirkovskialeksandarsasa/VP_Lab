@@ -1,26 +1,37 @@
 package mk.ukim.finki.wp.lab.model;
 
 import lombok.Data;
+import mk.ukim.finki.wp.lab.converter.TeacherFullNameConverter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Random;
 
 @Data
 @Entity
 public class Teacher {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
     private String surname;
-
+    @Convert(converter = TeacherFullNameConverter.class)
+    private TeacherFullName fullName;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfEmployment;
 
+    public Teacher(String name, String surname, LocalDate dateOfEmployment) {
+        this.fullName = new TeacherFullName(name, surname);
+        this.dateOfEmployment=dateOfEmployment;
+    }
+
+
+    public TeacherFullName getFullName() {
+        return fullName;
+    }
 
     public Teacher() {
     }
-
 }

@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Welcome and Choose a Course</title>
+    <title>Courses</title>
     <style type="text/css">
         body {
             width: 800px;
@@ -14,24 +15,37 @@
     <h1>Courses List</h1>
 </header>
 <main>
-    <h2>Choose course:</h2>
+    <h2>Update your:</h2>
+
     <form th:method="POST" th:action="@{/addStudent}">
-        <input th:each="course : ${courses}" type="radio" name="course" th:value="${course.getCourseId()}" th:text="${course.getName()}">
+        <th:block th:each="course : ${courses}">
+            <label>
+                <input th:id="${course.getCourseId()}" type="radio" name="course" th:value="${course.getCourseId()}"
+                       th:text="${course.getName()}">
+            </label>
+        </th:block>
         <button type="submit" value="submit">Submit</button>
     </form>
-<h1>Azuriraj gi kursevite</h1>
-    <div th:each="course :${courses}">
+
+    <div th:each="course : ${courses}">
         <p th:text="${course.getName()}"></p>
+        <a th:href="@{'/courses/edit/{id}' (id=${course.getCourseId()})}">Edit</a>
         <form class="delete" th:method="DELETE" th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}">
             <button type="submit">Delete</button>
         </form>
-        <a th:href="@{'/courses/edit/{id}' (id=${course.getCourseId()})}">Edit</a>
     </div>
 
     <div>
-        <a th:href="@{'courses/add'}">Add a course</a>
+        <a th:href="@{/courses/add}">Add a new course</a>
     </div>
-    <br/>
+    <div>
+        <a th:href="@{/courses/addGrade}">Add a new grade</a>
+    </div>
+    <div>
+        <a th:href="@{/courses/grades}">View grades</a>
+    </div>
+
+
 </main>
 </body>
 </html>

@@ -3,6 +3,8 @@ package mk.ukim.finki.wp.lab.model;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
@@ -17,8 +19,14 @@ public class Student {
 
     private String surname;
 
-    public Student() {
+    public Student(String username, String password, String name, String surname) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
     }
 
+    public Student() {
+    }
 
 }

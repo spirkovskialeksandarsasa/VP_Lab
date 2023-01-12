@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
+import mk.ukim.finki.wp.lab.model.enumerations.Type;
 import mk.ukim.finki.wp.lab.repository.impl.CourseRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.JpaCourseRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.JpaStudentRepository;
@@ -48,6 +49,7 @@ public class CourseServiceImpl implements CourseService {
             if(course==null){
                 return null;
             }
+            course.getStudents().add(student);
             courseRepository.save(course);
             return course;
         }
@@ -64,8 +66,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course addCourse(String name, String description, Long teacherID) {
-        Course course = new Course();
+    public Course addCourse(String name, String description, Long teacher, String type) {
+        Course course = new Course(name, description, teacherService.findById(teacher), Type.valueOf(type));
         if (getCourses()
                 .stream()
                 .filter(c -> c.getName().equals(course.getName()))
@@ -77,11 +79,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void editCourse(Long id, String name, String description, Long teacher) {
+    public void editCourse(Long id, String name, String description, Long teacher, String type) {
         Course course = courseRepository.findById(id).orElse(null);
         course.setName(name);
         course.setDescription(description);
         course.setTeacher(teacherService.findById(teacher));
+        course.setType(Type.valueOf(type));
+
+        courseRepository.save(course);
     }
 
     @Override

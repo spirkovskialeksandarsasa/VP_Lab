@@ -12,9 +12,9 @@ public interface CourseService{
     List<Course> getCourses();
     Course getCourseById(Long courseId);
 
-    Course addCourse(String name, String description, Long teacherID);
+    Course addCourse(String name, String description, Long teacher, String type);
 
-    void editCourse(Long course, String name, String description, Long teacher);
+    void editCourse(Long course, String name, String description, Long teacher, String type);
 
     void deleteCourse(Long id);
 }
