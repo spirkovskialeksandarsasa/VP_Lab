@@ -107,6 +107,5 @@ public class CourseController {
         model.addAttribute("grades", gradeService.listAll());
         return "listGrades";
     }
-
 }
 

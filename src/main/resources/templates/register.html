@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+Register
+<form th:method="POST" th:action="@{/register}">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" placeholder="Username">
+    <br>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="*******">
+<br>
+    <label for="repeatPassword">Repeat your password</label>
+    <input type="repeatPassword" id="repeatPassword" name="repeatPassword" placeholder="*******">
+    <br>
+    <label for="role">Role</label>
+    <select id="role" name="role">
+        <option th:if="${user} == null" th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+        <option th:if="${user} != null" th:each="role : ${roles}" th:value="${role}" th:text="${role}"
+                th:selected="${user.getRole().toString().equals(role)}"></option>
+    </select>
+    <br>
+
+    <button id="submit">Sign up</button>
+
+
+</form>
+</body>
+</html>

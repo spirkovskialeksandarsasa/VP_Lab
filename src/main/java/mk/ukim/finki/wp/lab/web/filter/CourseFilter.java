@@ -13,7 +13,7 @@ import java.util.List;
 @WebFilter
 @Profile("servlet")
 public class CourseFilter implements Filter {
-    private final List<String> allowedPaths = List.of("/listCourses", "/courses", "/courses/delete", "/courses/search");
+    private final List<String> allowedPaths = List.of("/listCourses", "/courses", "/courses/delete");
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
