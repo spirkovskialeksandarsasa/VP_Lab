@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>Courses</title>
@@ -29,9 +29,11 @@
 
     <div th:each="course : ${courses}">
         <p th:text="${course.getName()}"></p>
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{'/courses/edit/{id}' (id=${course.getCourseId()})}">Edit</a>
         <form class="delete" th:method="DELETE" th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}">
             <button type="submit">Delete</button>
+        </th:block>
         </form>
     </div>
 
